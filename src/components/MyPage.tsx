@@ -4,6 +4,8 @@ import axios from "axios";
 import dynamic from "next/dynamic";
 
 export const MyPage = () => {
+  const url = process.env.URL ? process.env.URL : "http://localhost:8080";
+
   const [ownPoint, setOwnPoint] = useState("");
   const [userName, setUserName] = useState("");
   const [isShow, setIsShow] = useState(false);
@@ -11,12 +13,9 @@ export const MyPage = () => {
   useEffect(() => {
     const getPoint = async () => {
       try {
-        const res = await axios.get(
-          "https://api.mahjong-wins.com/api/v1/user/info/",
-          {
-            headers: { Authorization: `JWT ${localStorage.getItem("access")}` },
-          }
-        );
+        const res = await axios.get(`${url}/api/v1/user/info/`, {
+          headers: { Authorization: `JWT ${localStorage.getItem("access")}` },
+        });
         if (res.data[0]) {
           setOwnPoint(res.data[0].point);
           localStorage.setItem("infoId", res.data[0].id);
@@ -34,7 +33,7 @@ export const MyPage = () => {
     const getUserName = async () => {
       try {
         await axios
-          .get("https://api.mahjong-wins.com/api/v1/user/profile/", {
+          .get(`${url}/api/v1/user/profile/`, {
             headers: { Authorization: `JWT ${localStorage.getItem("access")}` },
           })
           .then((res) =>

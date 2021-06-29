@@ -4,6 +4,8 @@ import axios from "axios";
 import { Alert } from "./Alert";
 
 export const SignUp = () => {
+  const url = process.env.URL ? process.env.URL : "http://localhost:8080";
+
   const [email, setEmail] = useState(""); // メールアドレス
   const [password, setPassword] = useState(""); // パスワード
   const [checkPw, setCheckPw] = useState(""); // 確認用パスワード
@@ -33,7 +35,7 @@ export const SignUp = () => {
           // パスワード一致チェック
           try {
             await axios.post(
-              "https://api.mahjong-wins.com/api/v1/user/create/",
+              `${url}/api/v1/user/create/`,
               {
                 email: email,
                 password: password,
@@ -43,7 +45,7 @@ export const SignUp = () => {
               }
             );
             const token = await axios.post(
-              "https://api.mahjong-wins.com/api/v1/auth/jwt/create",
+              `${url}/api/v1/auth/jwt/create`,
               {
                 email: email,
                 password: password,

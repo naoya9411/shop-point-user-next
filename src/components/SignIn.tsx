@@ -10,6 +10,8 @@ export const SignIn = () => {
     }
   });
 
+  const url = process.env.URL ? process.env.URL : "http://localhost:8080";
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [alert, setAlert] = useState({ err: false, text: "" }); // アラートオブジェクト
@@ -31,7 +33,7 @@ export const SignIn = () => {
 
     try {
       const token = await axios.post(
-        "https://api.mahjong-wins.com/api/v1/auth/jwt/create",
+        `${url}/api/v1/auth/jwt/create`,
         {
           email: email,
           password: password,

@@ -4,6 +4,8 @@ import prefectures from "../../public/prefectures.json";
 import { Alert } from "./Alert";
 
 export const RegProfileForm = () => {
+  const url = process.env.URL ? process.env.URL : "http://localhost:8080";
+
   const [firstName, setFirstName] = useState(""); // 姓
   const [lastName, setLastName] = useState(""); // 名
   const [birthYear, setBirthYear] = useState(0); // 誕生年
@@ -62,7 +64,7 @@ export const RegProfileForm = () => {
     try {
       await axios.post(
         // profile作成
-        "https://api.mahjong-wins.com/api/v1/user/profile/",
+        `${url}/api/v1/user/profile/`,
         {
           first_name: firstName,
           last_name: lastName,
@@ -78,7 +80,7 @@ export const RegProfileForm = () => {
         }
       );
       await axios.post(
-        "https://api.mahjong-wins.com/api/v1/user/info/",
+        `${url}/api/v1/user/info/`,
         {},
         {
           headers: { Authorization: `JWT ${localStorage.getItem("access")}` },
